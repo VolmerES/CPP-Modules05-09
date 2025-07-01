@@ -6,14 +6,14 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:03:53 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 20:30:13 by volmer           ###   ########.fr       */
+/*   Updated: 2025/07/01 20:32:26 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Bureaucrat.hpp"
 
 Bureaucrat::~Bureaucrat() {}
-Bureaucrat::Bureaucrat(const std::string& name, const int grade) : _name(name), _grade(grade) {
+Bureaucrat::Bureaucrat(const std::string& name, const int grade) : _grade(grade), _name(name) {
 	if (grade < 1)
 		throw Bureaucrat::GradeTooHighException();
 	if (grade > 150)
@@ -52,6 +52,7 @@ void	Bureaucrat::decrementGrade() {
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &buro) {
 	out << buro.getName() << ", bureaucrat grade " << buro.getGrade() << "." << std::endl;
+	return out;
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
