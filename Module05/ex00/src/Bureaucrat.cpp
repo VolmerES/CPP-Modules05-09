@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:03:53 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 19:43:38 by volmer           ###   ########.fr       */
+/*   Updated: 2025/07/01 20:30:13 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,12 @@ void	Bureaucrat::decrementGrade() {
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &buro) {
 	out << buro.getName() << ", bureaucrat grade " << buro.getGrade() << "." << std::endl;
+}
+
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
+	return ("Grade too high");
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
+	return ("Grade too low");
 }
