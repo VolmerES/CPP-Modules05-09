@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:03:53 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 20:32:26 by volmer           ###   ########.fr       */
+/*   Updated: 2025/07/01 20:56:51 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	Bureaucrat::getGrade() const {
 }
 
 void	Bureaucrat::incrementGrade() {
-	if (_grade < 1)
+	if (_grade <= 1)
 		throw Bureaucrat::GradeTooHighException();
 	_grade--;
 }
 
 void	Bureaucrat::decrementGrade() {
-	if (_grade > 150)
+	if (_grade >= 150)
 		throw Bureaucrat::GradeTooLowException();
 	_grade++;
 }

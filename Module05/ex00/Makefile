@@ -1,4 +1,6 @@
-SRC = src/Bureaucrat.cpp
+SRC = src/Bureaucrat.cpp \
+	  src/main.cpp
+	  
 OBJ = $(SRC:.cpp=.o)
 NAME = Bureaucrat
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98

@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:54:56 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 19:41:59 by volmer           ###   ########.fr       */
+/*   Updated: 2025/07/01 20:59:02 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 #include <iostream>
 #include <stdexcept>
+#define RED     "\033[1;31m"
+#define GREEN   "\033[1;32m"
+#define YELLOW  "\033[1;33m"
+#define CYAN    "\033[1;36m"
+#define RESET   "\033[0m"
+
 
 class Bureaucrat {
 	private:
