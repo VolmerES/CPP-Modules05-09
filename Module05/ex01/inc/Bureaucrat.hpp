@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:54:56 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 20:59:02 by volmer           ###   ########.fr       */
+/*   Updated: 2025/08/26 13:20:25 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #define CYAN    "\033[1;36m"
 #define RESET   "\033[0m"
 
+class Form;
 
 class Bureaucrat {
 	private:
@@ -32,7 +33,7 @@ class Bureaucrat {
 		Bureaucrat& operator=(const Bureaucrat &other);
 		
 		const std::string&	getName() const;
-		int	getGrade() const;
+		int					getGrade() const;
 
 		void	incrementGrade();
 		void	decrementGrade();
@@ -46,6 +47,8 @@ class Bureaucrat {
 			public:
 				const char* what() const throw();
 		};
+
+		void signForm(Form &form);
 		
 };
 

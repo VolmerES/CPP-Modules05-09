@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:03:53 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 20:56:51 by volmer           ###   ########.fr       */
+/*   Updated: 2025/08/26 13:31:57 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Bureaucrat.hpp"
+#include "../inc/Form.hpp"
 
 Bureaucrat::~Bureaucrat() {}
 Bureaucrat::Bureaucrat(const std::string& name, const int grade) : _grade(grade), _name(name) {
@@ -61,4 +62,8 @@ const char* Bureaucrat::GradeTooHighException::what() const throw() {
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
 	return ("Grade too low");
+}
+
+void		Bureaucrat::signForm(Form &form) {
+		try (form.beSigned(*this))  catch Form:GradeTooHighException();
 }

@@ -6,14 +6,15 @@
 /*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 10:39:46 by jdelorme          #+#    #+#             */
-/*   Updated: 2025/08/26 11:53:11 by jdelorme         ###   ########.fr       */
+/*   Updated: 2025/08/26 13:21:27 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include <iostream>
 #include <exception>
-#include "Bureaucrat.hpp"
+#include <string>
+class Bureaucrat;
 
 class Form {
 	private:
@@ -27,12 +28,21 @@ class Form {
 		Form &operator=(const Form &other);
 		~Form();
 
+		std::string	const&	getName() const;
+		bool				isSigned() const;
+		int					getGradeToSign() const;
+		int					getGradeToExecute() const;
+
+		void				beSigned(Bureaucrat const& Buro);
+
 		class GradeTooHighException : public std::exception {
 			public:
-				const char* what() const throw();
+				virtual const char* what() const throw();
 		};
 		class GradeTooLowException : public std::exception {
 			public:
-				const char* what() const throw();
+				virtual const char* what() const throw();
 		};
-}; 
+};
+
+std::ostream& operator<<(std::ostream& os, Form const& form);
