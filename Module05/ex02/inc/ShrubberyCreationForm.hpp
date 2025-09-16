@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:57:09 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/16 18:10:43 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/16 18:44:19 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 class ShrubberyCreationForm : public AForm {
 	private:
-		const std::string _target;
+		std::string _target;
 	public:
 		ShrubberyCreationForm(const std::string &target);
 		ShrubberyCreationForm(const ShrubberyCreationForm &other);
