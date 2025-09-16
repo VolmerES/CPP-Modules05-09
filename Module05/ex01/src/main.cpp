@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:37:38 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/16 17:22:59 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/16 17:24:45 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ int main() {
 	Form b("Hacienda", 150, 25);
 	e.signForm(b);
 	std::cout << b << std::endl;
-	
+
+	std::cout << "\n\033[1;36m-------- CASO 7: Juan intenta firmar un from ya firmado ---> FALLA -------------------\033[0m" << std::endl;
+	e.signForm(b);
+	std::cout << b << std::endl;
+
 	return 0;
 }
 
