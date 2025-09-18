@@ -6,12 +6,15 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:37:38 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/16 17:39:33 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/18 11:29:24 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Bureaucrat.hpp"
 #include "../inc/AForm.hpp"
+#include "../inc/PresidentialPardonForm.hpp"
+#include "../inc/RobotomyRequestForm.hpp"
+#include "../inc/ShrubberyCreationForm.hpp"
 
 int main() {
 	std::cout << "\033[1;36m-------- CASO 1: Juan con grado 0 ---> FALLA --------\033[0m" << std::endl;
@@ -53,20 +56,27 @@ int main() {
 
 	std::cout << "\n\033[1;36m-------- CASO 5: Juan con grado 100 intenta firmar 50 ---> FALLA -------------------\033[0m" << std::endl;
 	Bureaucrat d("Juan", 100);
-	AForm a("Hacienda", 50, 25);
-	d.signForm(a);
-	std::cout << a << std::endl;
+	ShrubberyCreationForm Form1("Hacienda");
+	d.signForm(Form1);
+	std::cout << Form1 << std::endl;
 
 	std::cout << "\n\033[1;36m-------- CASO 6: Juan con grado 100 intenta firmar 150 ---> FUNCIONA -------------------\033[0m" << std::endl;
 	Bureaucrat e("Juan", 100);
-	AForm b("Hacienda", 150, 25);
-	e.signForm(b);
-	std::cout << b << std::endl;
+	RobotomyRequestForm Robot("Terminator");
+	e.signForm(Robot);
+	std::cout << Robot << std::endl;
 
 	std::cout << "\n\033[1;36m-------- CASO 7: Juan intenta firmar un from ya firmado ---> FALLA -------------------\033[0m" << std::endl;
-	e.signForm(b);
-	std::cout << b << std::endl;
-
+	try {
+	Bureaucrat f("Juan ", 1);
+	PresidentialPardonForm Perdon("Pardonez-moi");
+	f.signForm(Perdon);
+	Perdon.execute(f);
+	std::cout << Perdon << std::endl;
+	}
+	catch (std::exception &error) {
+    std::cerr << "\033[1;31m[ERROR] " << error.what() << "\033[0m" << std::endl;
+}
 	return 0;
 }
 

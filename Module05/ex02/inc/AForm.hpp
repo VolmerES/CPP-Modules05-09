@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 10:39:46 by jdelorme          #+#    #+#             */
-/*   Updated: 2025/09/16 18:09:15 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/17 18:27:12 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 class Bureaucrat;
 
 class AForm {
+	protected:
+		void checkExecutable(Bureaucrat const & executor);
 	private:
 		const std::string	_name;
 		bool				_isSigned;
@@ -43,6 +45,13 @@ class AForm {
 			public:
 				virtual const char* what() const throw();
 		};
+
+		class FormNoSignedException : public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+
+		void	checkExecutable(Bureaucrat const & executor) const;
 
 		virtual void execute(Bureaucrat const & executor) const = 0;
 		

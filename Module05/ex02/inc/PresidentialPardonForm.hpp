@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 18:17:09 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/16 18:22:08 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/18 10:58:27 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 class PresidentialPardonForm : public AForm {
 	private:
-		const std::string _target;
+		std::string _target;
 		
 	public:
 		PresidentialPardonForm(const std::string& target);
