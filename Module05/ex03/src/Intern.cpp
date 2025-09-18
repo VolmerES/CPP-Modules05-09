@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 12:11:37 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/18 12:56:55 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/18 13:11:31 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <string>
 
 Intern::Intern() {}
-Intern::Intern(const Intern & other) {}
-Intern& Intern::operator=(const Intern & other) {}
+Intern::Intern(const Intern & other) { (void)other; }
+Intern& Intern::operator=(const Intern & other) {  (void)other; return *this; }
 Intern::~Intern() {}
 
 AForm*	Intern::createShrubbery(const std::string & target) {
