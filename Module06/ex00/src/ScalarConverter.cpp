@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/22 17:20:36 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/22 17:44:01 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void ScalarConverter::convert(std::string const & literal) {
 	int		i;
 	float	f;
 	double	d;
+	bool	impossible;
 	
 	if (Type == CHAR) {
 		c = literal[0];
@@ -88,6 +89,29 @@ void ScalarConverter::convert(std::string const & literal) {
 		d = static_cast<double>(c);
 	}
 	if (Type == INT) {
-		
+		long typeInt = std::strtol(literal.c_str(), NULL, 10);
+		if (typeInt > INT_MAX || typeInt < INT_MIN){
+			impossible = true;;
+		}
+		if (!impossible) {
+			i = static_cast<int>(typeInt);
+			c = static_cast<char>(i);
+			f = static_cast<float>(i);
+			d = static_cast<double>(i);
+		}
+	}
+	if (Type == FLOAT)
+	{
+		f = std::strtof(literal.c_str(), NULL);
+		c = static_cast<char>(f);
+		i = static_cast<int>(f);
+		d = static_cast<double>(f);
+	}
+	if (Type == DOUBLE)
+	{
+		d = std::strtod(literal.c_str(), NULL);
+		c = static_cast<char>(d);
+		i = static_cast<int>(d);
+		f = static_cast<float>(d);
 	}
 }
