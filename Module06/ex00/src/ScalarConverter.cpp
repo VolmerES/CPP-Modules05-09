@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/24 11:04:40 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:05:50 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 				break;
 			}
 		}
-		if (isFloat && hasDot && literal.back() == 'f')
+		if (isFloat && hasDot && literal[literal.length()-1] == 'f')
 			return FLOAT;
 	}
 	else if (literal.length() > 1 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
