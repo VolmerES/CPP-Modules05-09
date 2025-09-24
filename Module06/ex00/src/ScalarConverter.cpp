@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/24 11:05:50 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:16:03 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 }
 
 void ScalarConverter::convert(std::string const & literal) {
-	if (literal.empty()) {
+	LiteralType Type = detectType(literal);
+	if (literal.empty() || Type == INVALID) {
 		std::cerr << "Impossible" << std::endl;
 	}
-	LiteralType Type = detectType(literal);
 	char	c;
 	int		i;
 	float	f;
 	double	d;
-	bool	impossible;
+	bool	impossible = false;
 	
 	if (Type == CHAR) {
 		c = literal[0];
