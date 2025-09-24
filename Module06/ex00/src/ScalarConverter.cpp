@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/24 11:16:03 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:46:07 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 	}
 	else if (literal.length() == 1 && isprint(literal[0]) && !isdigit(literal[0]))
 		return (CHAR);
-	else if (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0])){
+	else if ((literal[0] == '+' || literal[0] == '-') && isdigit(literal[0])){
 		bool isInt = true;
 		for (int i = 1; i != literal.length(); i++) {
 			if (!isdigit(literal[i])) {
@@ -88,7 +88,7 @@ void ScalarConverter::convert(std::string const & literal) {
 		f = static_cast<float>(c);
 		d = static_cast<double>(c);
 	}
-	if (Type == INT) {
+	else if (Type == INT) {
 		long typeInt = std::strtol(literal.c_str(), NULL, 10);
 		if (typeInt > INT_MAX || typeInt < INT_MIN){
 			impossible = true;;
@@ -100,18 +100,38 @@ void ScalarConverter::convert(std::string const & literal) {
 			d = static_cast<double>(i);
 		}
 	}
-	if (Type == FLOAT)
+	else if (Type == FLOAT)
 	{
 		f = std::strtof(literal.c_str(), NULL);
 		c = static_cast<char>(f);
 		i = static_cast<int>(f);
 		d = static_cast<double>(f);
 	}
-	if (Type == DOUBLE)
+	else if (Type == DOUBLE)
 	{
 		d = std::strtod(literal.c_str(), NULL);
 		c = static_cast<char>(d);
 		i = static_cast<int>(d);
 		f = static_cast<float>(d);
+	}
+	else if (Type == PSEUDO_DOUBLE || Type == PSEUDO_FLOAT) {
+		if (literal == "nan") {
+    		std::cout << "char: impossible" << std::endl;
+			std::cout << "int: impossible" << std::endl;
+    		std::cout << "float: nanf" << std::endl;
+    		std::cout << "double: nan" << std::endl;
+		}
+		else if (literal == "+inf") {
+    		std::cout << "char: impossible" << std::endl;
+    		std::cout << "int: impossible" << std::endl;
+    		std::cout << "float: +inff" << std::endl;
+    		std::cout << "double: +inf" << std::endl;
+		}
+		else if (literal == "-inf") {
+    		std::cout << "char: impossible" << std::endl;
+    		std::cout << "int: impossible" << std::endl;
+    		std::cout << "float: -inff" << std::endl;;
+    		std::cout << "double: -inf" << std::endl; 
+		}
 	}
 }
