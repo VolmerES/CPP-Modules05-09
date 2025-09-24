@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/22 17:44:01 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/24 11:04:40 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 	else if (literal.length() > 2 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
 		bool hasDot = false;
 		bool isFloat = true;
-		for (int i; i < literal.length() - 1; ++i) {
+		for (int i = 0; i < literal.length() - 1; ++i) {
 			if (literal[i] == '.') {
 				if (hasDot) { 
 					isFloat = false; break; 
