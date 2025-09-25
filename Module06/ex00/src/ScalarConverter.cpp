@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 15:49:36 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:58:02 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,29 +135,30 @@ void ScalarConverter::convert(std::string const & literal) {
 	else if (Type == INT) {
 		long typeInt = std::strtol(literal.c_str(), NULL, 10);
 		if (typeInt > INT_MAX || typeInt < INT_MIN){
-			impossible = true;;
-		}
-		if (!impossible) {
-			i = static_cast<int>(typeInt);
-			c = static_cast<char>(i);
-			d = static_cast<double>(i);
-			f = static_cast<float>(d);
-			if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
-				std::cout << "char: impossible" << std::endl;
-			else if	(!isprint(c))
-				std::cout << "char: Non displayable" << std::endl;
-			else
-				std::cout << "char: '" << c << "'" << std::endl;
-        	std::cout << "int: " << i << std::endl;
-			std::cout << std::fixed << std::setprecision(1);
+        	std::cout << "char: impossible" << std::endl;
+        	std::cout << "int: impossible" << std::endl;
+        	double d = std::strtod(literal.c_str(), NULL);
+        	float f = static_cast<float>(d);
+        	std::cout << std::fixed << std::setprecision(1);
         	std::cout << "float: " << f << "f" << std::endl;
         	std::cout << "double: " << d << std::endl;
-			return;
+        	return;
 		}
-		else if (impossible) {
-			ft_is_imposible();
-			return;
-		}
+		i = static_cast<int>(typeInt);
+		c = static_cast<char>(i);
+		d = static_cast<double>(i);
+		f = static_cast<float>(d);
+		if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
+			std::cout << "char: impossible" << std::endl;
+		else if	(!isprint(c))
+			std::cout << "char: Non displayable" << std::endl;
+		else
+			std::cout << "char: '" << c << "'" << std::endl;
+    	std::cout << "int: " << i << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+    	std::cout << "float: " << f << "f" << std::endl;
+        std::cout << "double: " << d << std::endl;
+		return;
 	}
 	else if (Type == FLOAT)
 	{
