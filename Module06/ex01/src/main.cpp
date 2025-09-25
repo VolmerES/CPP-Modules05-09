@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 17:42:24 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 18:00:50 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:09:26 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int main() {
 
     uintptr_t raw = Serializer::serialize(&data);
     Data* ptr = Serializer::deserialize(raw);
+	if (ptr == NULL || raw == NULL){
+		std::cerr << "Null pointer not allowed" << std::endl;
+		return (1);
+	}
 
     std::cout << "Original: " << &data << " -> " << data.name << ", " << data.age << std::endl;
     std::cout << "After deserialization: " << ptr << " -> " << ptr->name << ", " << ptr->age << std::endl;
