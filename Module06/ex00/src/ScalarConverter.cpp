@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 14:21:48 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:25:34 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,10 @@ void ScalarConverter::convert(std::string const & literal) {
 			c = static_cast<char>(i);
 			f = static_cast<float>(i);
 			d = static_cast<double>(i);
+			std::cout << "char: " << c << std::endl;
+        	std::cout << "int: " << i << std::endl;
+        	std::cout << "float: " << f << std::endl;
+        	std::cout << "double: " << d << std::endl;
 			return;
 		}
 		else if (impossible)
