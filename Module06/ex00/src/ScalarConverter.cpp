@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 15:58:02 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:59:29 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void ScalarConverter::convert(std::string const & literal) {
 	int		i;
 	float	f;
 	double	d;
-	bool	impossible = false;
 	
 	if (Type == CHAR) {
 		c = literal[0];
