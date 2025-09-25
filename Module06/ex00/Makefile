@@ -1,4 +1,4 @@
-SRC = src/main_test.cpp \
+SRC = src/main.cpp \
 	  src/ScalarConverter.cpp
 	  
 OBJ = $(SRC:.cpp=.o)
