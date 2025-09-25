@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:03 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/22 17:12:42 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:00:48 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 enum LiteralType{
 	CHAR,

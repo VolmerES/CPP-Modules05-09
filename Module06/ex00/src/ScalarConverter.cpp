@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 14:52:11 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:03:29 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,9 @@ void ScalarConverter::convert(std::string const & literal) {
 			else
 				std::cout << "char: " << c << std::endl;
         	std::cout << "int: " << i << std::endl;
-        	std::cout << "float: " << f << ".0f" << std::endl;
-        	std::cout << "double: " << d << ".0" << std::endl;
+			std::cout << std::fixed << std::setprecision(1);
+        	std::cout << "float: " << f << "f" << std::endl;
+        	std::cout << "double: " << d << std::endl;
 			return;
 		}
 		else if (impossible)
@@ -149,8 +150,9 @@ void ScalarConverter::convert(std::string const & literal) {
 		d = static_cast<double>(f);
 		std::cout << "char: " << c << std::endl;
     	std::cout << "int: " << i << std::endl;
-    	std::cout << "float: " << f << ".0f" << std::endl;
-       	std::cout << "double: " << d << ".0" << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+    	std::cout << "float: " << f << "f" << std::endl;
+       	std::cout << "double: " << d << std::endl;
 		return;
 	}
 	else if (Type == DOUBLE)
@@ -161,8 +163,9 @@ void ScalarConverter::convert(std::string const & literal) {
 		f = static_cast<float>(d);
 		std::cout << "char: " << c << std::endl;
     	std::cout << "int: " << i << std::endl;
-    	std::cout << "float: " << f << ".0f" << std::endl;
-       	std::cout << "double: " << d << ".0" << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+    	std::cout << "float: " << f << "f" << std::endl;
+       	std::cout << "double: " << d << std::endl;
 		
 		return;
 	}
