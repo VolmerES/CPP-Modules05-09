@@ -6,11 +6,19 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 14:25:34 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:52:11 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ScalarConverter.hpp"
+
+void	ft_is_imposible(void){
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+    std::cout << "float: impossible" << std::endl;
+    std::cout << "double: impossible" << std::endl;
+	return;
+}
 
 LiteralType	ScalarConverter::detectType(std::string const & literal) {
 	if (literal == "nanf" || literal == "+inff" || literal == "-inff") {
@@ -44,6 +52,8 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
     	if (isInt) {
     	    return (INT);
     	}
+		else
+			return (INVALID);
 	}
 	else if (literal.length() > 2 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
 		bool hasDot = false;
@@ -87,10 +97,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 void ScalarConverter::convert(std::string const & literal) {
 	LiteralType Type = detectType(literal);
 	if (literal.empty() || Type == INVALID) {
-		std::cout << "char: impossible" << std::endl;
-		std::cout << "int: impossible" << std::endl;
-    	std::cout << "float: impossible" << std::endl;
-    	std::cout << "double: impossible" << std::endl;
+		ft_is_imposible();
 		return;
 	}
 	char	c;
@@ -104,6 +111,10 @@ void ScalarConverter::convert(std::string const & literal) {
 		i = static_cast<int>(c);
 		f = static_cast<float>(c);
 		d = static_cast<double>(c);
+		std::cout << "char: " << c << std::endl;
+    	std::cout << "int: " << i << std::endl;
+    	std::cout << "float: " << f << ".0f" << std::endl;
+       	std::cout << "double: " << d << ".0" << std::endl;
 	}
 	else if (Type == INT) {
 		long typeInt = std::strtol(literal.c_str(), NULL, 10);
@@ -115,10 +126,15 @@ void ScalarConverter::convert(std::string const & literal) {
 			c = static_cast<char>(i);
 			f = static_cast<float>(i);
 			d = static_cast<double>(i);
-			std::cout << "char: " << c << std::endl;
+			if (i < 0 || i > 127)
+				std::cout << "char: impossible" << std::endl;
+			else if	(!isprint(c))
+				std::cout << "char: Non displayable" << std::endl;
+			else
+				std::cout << "char: " << c << std::endl;
         	std::cout << "int: " << i << std::endl;
-        	std::cout << "float: " << f << std::endl;
-        	std::cout << "double: " << d << std::endl;
+        	std::cout << "float: " << f << ".0f" << std::endl;
+        	std::cout << "double: " << d << ".0" << std::endl;
 			return;
 		}
 		else if (impossible)
@@ -131,6 +147,10 @@ void ScalarConverter::convert(std::string const & literal) {
 		c = static_cast<char>(f);
 		i = static_cast<int>(f);
 		d = static_cast<double>(f);
+		std::cout << "char: " << c << std::endl;
+    	std::cout << "int: " << i << std::endl;
+    	std::cout << "float: " << f << ".0f" << std::endl;
+       	std::cout << "double: " << d << ".0" << std::endl;
 		return;
 	}
 	else if (Type == DOUBLE)
@@ -139,6 +159,11 @@ void ScalarConverter::convert(std::string const & literal) {
 		c = static_cast<char>(d);
 		i = static_cast<int>(d);
 		f = static_cast<float>(d);
+		std::cout << "char: " << c << std::endl;
+    	std::cout << "int: " << i << std::endl;
+    	std::cout << "float: " << f << ".0f" << std::endl;
+       	std::cout << "double: " << d << ".0" << std::endl;
+		
 		return;
 	}
 	else if (Type == PSEUDO_DOUBLE || Type == PSEUDO_FLOAT) {
