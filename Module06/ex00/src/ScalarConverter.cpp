@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 15:03:29 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:16:46 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
     	if (isInt) {
     	    return (INT);
     	}
-		else
-			return (INVALID);
 	}
 	else if (literal.length() > 2 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
 		bool hasDot = false;
@@ -73,7 +71,9 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 		if (isFloat && hasDot && literal[literal.length()-1] == 'f')
 			return FLOAT;
 	}
-	else if (literal.length() > 1 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
+	else if (literal.length() > 1 &&
+         (literal[0] == '+' || literal[0] == '-' ||
+          isdigit(static_cast<unsigned char>(literal[0])) || literal[0] == '.')) {
 		bool hasDot = false;
 		bool isDouble = true;
 		for (size_t i = 1; i < literal.length(); ++i) {
@@ -83,7 +83,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 				}
 				hasDot = true;
 			}
-			else if (!isdigit(literal[i])) {
+			else if (!isdigit(static_cast<unsigned char>(literal[i]))) {
 				isDouble = false;
 				break;
 			}
@@ -169,27 +169,19 @@ void ScalarConverter::convert(std::string const & literal) {
 		
 		return;
 	}
-	else if (Type == PSEUDO_DOUBLE || Type == PSEUDO_FLOAT) {
-		if (literal == "nan") {
-    		std::cout << "char: impossible" << std::endl;
-			std::cout << "int: impossible" << std::endl;
-    		std::cout << "float: nanf" << std::endl;
-    		std::cout << "double: nan" << std::endl;
-			return;
-		}
-		else if (literal == "+inf") {
-    		std::cout << "char: impossible" << std::endl;
-    		std::cout << "int: impossible" << std::endl;
-    		std::cout << "float: +inff" << std::endl;
-    		std::cout << "double: +inf" << std::endl;
-			return;
-		}
-		else if (literal == "-inf") {
-    		std::cout << "char: impossible" << std::endl;
-    		std::cout << "int: impossible" << std::endl;
-    		std::cout << "float: -inff" << std::endl;;
-    		std::cout << "double: -inf" << std::endl;
-			return;
-		}
+	else if (Type == PSEUDO_FLOAT) {
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: " << literal << std::endl;
+		std::string dbl = literal.substr(0, literal.length() - 1);
+		std::cout << "double: " << dbl << std::endl;
+		return;
+	}
+	else if (Type == PSEUDO_DOUBLE) {
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: " << literal << "f" << std::endl;
+		std::cout << "double: " << literal << std::endl;
+		return;
 	}
 }
