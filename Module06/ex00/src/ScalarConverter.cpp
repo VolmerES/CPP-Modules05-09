@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/24 11:49:34 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 14:03:55 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 		return (CHAR);
 	else if ((literal[0] == '+' || literal[0] == '-') && isdigit(literal[0])){
 		bool isInt = true;
-		for (int i = 1; i != literal.length(); i++) {
+		for (size_t i = 1; i != literal.length(); i++) {
 			if (!isdigit(literal[i])) {
 				isInt = false;
 				break;
@@ -35,7 +35,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 	else if (literal.length() > 2 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
 		bool hasDot = false;
 		bool isFloat = true;
-		for (int i = 0; i < literal.length() - 1; ++i) {
+		for (size_t i = 0; i < literal.length() - 1; ++i) {
 			if (literal[i] == '.') {
 				if (hasDot) { 
 					isFloat = false; break; 
@@ -53,7 +53,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 	else if (literal.length() > 1 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
 		bool hasDot = false;
 		bool isDouble = true;
-		for (int i = 1; i < literal.length(); ++i) {
+		for (size_t i = 1; i < literal.length(); ++i) {
 			if (literal[i] == '.') {
 				if (hasDot) { 
 					isDouble = false; break; 
@@ -102,6 +102,8 @@ void ScalarConverter::convert(std::string const & literal) {
 			f = static_cast<float>(i);
 			d = static_cast<double>(i);
 		}
+		else if (impossible)
+			std::cout << "Non displayable" << std::endl;
 	}
 	else if (Type == FLOAT)
 	{
