@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 15:32:13 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:49:36 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,59 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 	if (literal == "nanf" || literal == "+inff" || literal == "-inff") {
 		return (PSEUDO_FLOAT);
 	}
-	else if (literal == "nan" || literal == "+inf" || literal == "-inf") {
+	if (literal == "nan" || literal == "+inf" || literal == "-inf") {
 		return (PSEUDO_DOUBLE);
 	}
-	else if (literal.length() == 1 && isprint(literal[0]) && !isdigit(literal[0]))
+	if (literal.length() == 1 && isprint(literal[0]) && !isdigit(literal[0]))
 		return (CHAR);
-	else if (!literal.empty() && (literal[0] == '+' || literal[0] == '-' 
+
+	if (literal.length() > 2 &&
+         (literal[0] == '+' || literal[0] == '-' ||
+          isdigit(static_cast<unsigned char>(literal[0])) || literal[0] == '.')) {
+		bool hasDot = false;
+		bool hasDigit = false;
+		bool isFloat = true;
+		for (size_t i = 0; i < literal.length() - 1; ++i) {
+			if (literal[i] == '.') {
+				if (hasDot) { 
+					isFloat = false; break; 
+				}
+				hasDot = true;
+			}
+       		 else if (isdigit(static_cast<unsigned char>(literal[i]))) {
+      	    	hasDigit = true;
+        	}
+        	else if (literal[i] != '+' && literal[i] != '-') {
+            	isFloat = false;
+            	break;
+        	}
+		}
+  		if (isFloat && hasDot && hasDigit && literal[literal.length() - 1] == 'f')
+        	return FLOAT;
+	}
+	if (literal.length() > 1 &&
+	         (literal[0] == '+' || literal[0] == '-' ||
+	          isdigit(static_cast<unsigned char>(literal[0])) || literal[0] == '.')) {
+	    bool hasDot = false;
+	    bool hasDigit = false;
+	    bool isDouble = true;
+	    for (size_t i = 0; i < literal.length(); ++i) {
+	        if (literal[i] == '.') {
+	            if (hasDot) { isDouble = false; break; }
+	            hasDot = true;
+	        }
+	        else if (isdigit(static_cast<unsigned char>(literal[i]))) {
+	            hasDigit = true;
+	        }
+	        else if (literal[i] != '+' && literal[i] != '-') {
+	            isDouble = false;
+	            break;
+	        }
+	    }
+	    if (isDouble && hasDot && hasDigit && literal[literal.length() - 1] != 'f')
+	        return DOUBLE;
+		}
+	if (!literal.empty() && (literal[0] == '+' || literal[0] == '-' 
 			|| isdigit(static_cast<unsigned char>(literal[0])))) {
    		bool   isInt = true;
     	size_t i = 0;
@@ -52,48 +99,6 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
     	if (isInt) {
     	    return (INT);
     	}
-	}
-	else if (literal.length() > 2 &&
-         (literal[0] == '+' || literal[0] == '-' ||
-          isdigit(static_cast<unsigned char>(literal[0])) || literal[0] == '.')) {
-		bool hasDot = false;
-		bool isFloat = true;
-		for (size_t i = 0; i < literal.length() - 1; ++i) {
-			if (literal[i] == '.') {
-				if (hasDot) { 
-					isFloat = false; break; 
-				}
-				hasDot = true;
-			}
-			else if (!isdigit(static_cast<unsigned char>(literal[i]))) {
-				isFloat = false;
-				break;
-			}
-		}
-		if (isFloat && hasDot && literal[literal.length()-1] == 'f')
-			return FLOAT;
-	}
-	else if (literal.length() > 1 &&
-         (literal[0] == '+' || literal[0] == '-' ||
-          isdigit(static_cast<unsigned char>(literal[0])) || literal[0] == '.')) {
-		bool 	hasDot = false;
-		bool 	isDouble = true;
-		size_t 	dotCount = 0;
-		for (size_t i = 1; i < literal.length(); ++i) {
-			if (literal[i] == '.') {
-				dotCount++;
-				if (hasDot) { 
-					isDouble = false; break; 
-				}
-				hasDot = true;
-			}
-			else if (!isdigit(static_cast<unsigned char>(literal[i]))) {
-				isDouble = false;
-				break;
-			}
-		}
-		if (isDouble && hasDot && dotCount == 1 && literal.back() != 'f')
-			return DOUBLE;
 	}
 	return (INVALID);
 }
