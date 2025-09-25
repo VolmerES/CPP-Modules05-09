@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:45:01 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 15:16:46 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:26:32 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
     	    return (INT);
     	}
 	}
-	else if (literal.length() > 2 && (literal[0] == '+' || literal[0] == '-' || isdigit(literal[0]))) {
+	else if (literal.length() > 2 &&
+         (literal[0] == '+' || literal[0] == '-' ||
+          isdigit(static_cast<unsigned char>(literal[0])) || literal[0] == '.')) {
 		bool hasDot = false;
 		bool isFloat = true;
 		for (size_t i = 0; i < literal.length() - 1; ++i) {
@@ -63,7 +65,7 @@ LiteralType	ScalarConverter::detectType(std::string const & literal) {
 				}
 				hasDot = true;
 			}
-			else if (!isdigit(literal[i])) {
+			else if (!isdigit(static_cast<unsigned char>(literal[i]))) {
 				isFloat = false;
 				break;
 			}
@@ -111,10 +113,17 @@ void ScalarConverter::convert(std::string const & literal) {
 		i = static_cast<int>(c);
 		f = static_cast<float>(c);
 		d = static_cast<double>(c);
-		std::cout << "char: " << c << std::endl;
+    if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
+        std::cout << "char: impossible" << std::endl;
+    else if (!std::isprint(static_cast<int>(d)))
+        std::cout << "char: Non displayable" << std::endl;
+    else
+        std::cout << "char: '" << c << "'" << std::endl;
+		
     	std::cout << "int: " << i << std::endl;
-    	std::cout << "float: " << f << ".0f" << std::endl;
-       	std::cout << "double: " << d << ".0" << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+    	std::cout << "float: " << f << "f" << std::endl;
+       	std::cout << "double: " << d << std::endl;
 	}
 	else if (Type == INT) {
 		long typeInt = std::strtol(literal.c_str(), NULL, 10);
@@ -126,7 +135,7 @@ void ScalarConverter::convert(std::string const & literal) {
 			c = static_cast<char>(i);
 			f = static_cast<float>(i);
 			d = static_cast<double>(i);
-			if (i < 0 || i > 127)
+			if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
 				std::cout << "char: impossible" << std::endl;
 			else if	(!isprint(c))
 				std::cout << "char: Non displayable" << std::endl;
@@ -138,17 +147,22 @@ void ScalarConverter::convert(std::string const & literal) {
         	std::cout << "double: " << d << std::endl;
 			return;
 		}
-		else if (impossible)
-			std::cout << "Non displayable" << std::endl;
+		else if (impossible) {
+			ft_is_imposible();
 			return;
+		}
 	}
 	else if (Type == FLOAT)
 	{
 		f = std::strtof(literal.c_str(), NULL);
-		c = static_cast<char>(f);
 		i = static_cast<int>(f);
 		d = static_cast<double>(f);
-		std::cout << "char: " << c << std::endl;
+		if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
+        	std::cout << "char: impossible" << std::endl;
+    	else if (!std::isprint(static_cast<int>(d)))
+        	std::cout << "char: Non displayable" << std::endl;
+    	else
+        	std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
     	std::cout << "int: " << i << std::endl;
 		std::cout << std::fixed << std::setprecision(1);
     	std::cout << "float: " << f << "f" << std::endl;
@@ -158,10 +172,14 @@ void ScalarConverter::convert(std::string const & literal) {
 	else if (Type == DOUBLE)
 	{
 		d = std::strtod(literal.c_str(), NULL);
-		c = static_cast<char>(d);
 		i = static_cast<int>(d);
 		f = static_cast<float>(d);
-		std::cout << "char: " << c << std::endl;
+		if (std::isnan(d) || std::isinf(d) || d < 0 || d > 127)
+        	std::cout << "char: impossible" << std::endl;
+    	else if (!std::isprint(static_cast<int>(d)))
+        	std::cout << "char: Non displayable" << std::endl;
+    	else
+        	std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
     	std::cout << "int: " << i << std::endl;
 		std::cout << std::fixed << std::setprecision(1);
     	std::cout << "float: " << f << "f" << std::endl;
