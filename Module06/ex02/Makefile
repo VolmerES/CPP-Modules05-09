@@ -1,8 +1,12 @@
 SRC = src/main.cpp \
-	  src/serializer.cpp
+	  src/creator.cpp \
+	  src/C.cpp \
+	  src/B.cpp \
+	  src/A.cpp \
+	  src/Base.cpp
 	  
 OBJ = $(SRC:.cpp=.o)
-NAME = serialize
+NAME = generate
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 CXX = c++
 RM = rm -f

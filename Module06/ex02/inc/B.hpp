@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 18:19:08 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/25 18:20:35 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/26 12:44:51 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,4 @@
 
 #include "Base.hpp"
 
-class B : public Base {
-	
-};
+class B : public Base {};

@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Base.hpp                                           :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/25 18:14:57 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/26 12:47:04 by volmer           ###   ########.fr       */
+/*   Created: 2025/09/26 12:42:33 by volmer            #+#    #+#             */
+/*   Updated: 2025/09/26 12:43:42 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include <iostream>
+#include "../inc/Base.hpp"
+#include "../inc/creator.hpp"
 
-class Base {
-	public:
-		virtual ~Base();
-		
-};
+int main() {
+    for (int i = 0; i < 10; ++i) {
+        Base* p = generate();
+        identify(p);    // versión puntero
+        identify(*p);   // versión referencia
+        delete p;
+    }
+    return 0;
+}
