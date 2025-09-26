@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 11:54:40 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/26 12:39:17 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/26 12:50:01 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ void	identify(Base* p) {
 
 void	identify(Base& p) {
 	try {
-		dynamic_cast<A&>(p);
+		(void)dynamic_cast<A&>(p);
 		std::cout << "A" << std::endl;
 		return;
 	}
 	catch (...) {}
 		try {
-		dynamic_cast<B&>(p);
+		(void)dynamic_cast<B&>(p);
 		std::cout << "B" << std::endl;
 		return;
 	}
 	catch (...) {}
 		try {
-		dynamic_cast<C&>(p);
+		(void)dynamic_cast<C&>(p);
 		std::cout << "C" << std::endl;
 		return;
 	}
