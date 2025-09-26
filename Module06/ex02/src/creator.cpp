@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   C.hpp                                              :+:      :+:    :+:   */
+/*   creator.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/25 18:21:36 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/26 11:50:30 by volmer           ###   ########.fr       */
+/*   Created: 2025/09/26 11:54:40 by volmer            #+#    #+#             */
+/*   Updated: 2025/09/26 12:13:55 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "../inc/creator.hpp"
+#include "../inc/A.hpp"
+#include "../inc/B.hpp"
+#include "../inc/C.hpp"
 
-#include "Base.hpp"
+Base*	generate(void) {
+	
+	bool seed;
 
-class C : public Base {
-	private:
-};
-
+	seed = false;
+	if (!seed) {
+		std::srand(static_cast<unsigned>(std::time(0)));
+		seed = true;
+	}
+	int rand = std::rand() % 3;
+	switch (rand) {
+		case 0: return new A;
+		case 1: return new B;
+		default: return new C;
+	}
+}
