@@ -49,6 +49,7 @@
 		"algorithm": "cpp",
 		"iomanip": "cpp",
 		"cstddef": "cpp",
-		"fstream": "cpp"
+		"fstream": "cpp",
+		"random": "cpp"
 	}
 }
