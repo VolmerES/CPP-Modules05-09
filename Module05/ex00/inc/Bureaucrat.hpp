@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:54:56 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 20:59:02 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/27 11:51:01 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class Bureaucrat {
 	private:
 		int	_grade;
 		const std::string  _name;
+		Bureaucrat();
 	public:
 		Bureaucrat(const std::string& name, const int grade);
 		~Bureaucrat();

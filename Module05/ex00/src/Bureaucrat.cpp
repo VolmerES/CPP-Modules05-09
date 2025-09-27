@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:03:53 by volmer            #+#    #+#             */
-/*   Updated: 2025/07/01 20:56:51 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/27 11:55:15 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Bureaucrat.hpp"
 
+Bureaucrat::Bureaucrat() : _grade(150), _name("Default") {}
 Bureaucrat::~Bureaucrat() {}
 Bureaucrat::Bureaucrat(const std::string& name, const int grade) : _grade(grade), _name(name) {
 	if (grade < 1)
@@ -51,7 +52,7 @@ void	Bureaucrat::decrementGrade() {
 }
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &buro) {
-	out << buro.getName() << ", bureaucrat grade " << buro.getGrade() << "." << std::endl;
+	out << buro.getName() << ", bureaucrat grade " << buro.getGrade() << ".";
 	return out;
 }
 
