@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PresidentialPardonForm.cpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 18:52:13 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/17 21:06:33 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/27 12:21:08 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 PresidentialPardonForm::~PresidentialPardonForm() {}
 
 void PresidentialPardonForm::execute(Bureaucrat const& executor) const {
-    // 1) Verificar con checkExecutable(executor)
 	checkExecutable(executor);
 	std::cout << _target << " has been slayed by Zapohd Beeblebrox" << std::endl;
-    // 2) Imprimir que <target> ha sido perdonado por Zaphod Beeblebrox
 }

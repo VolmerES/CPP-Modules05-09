@@ -6,7 +6,7 @@
 /*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 10:51:44 by jdelorme          #+#    #+#             */
-/*   Updated: 2025/08/26 13:09:53 by jdelorme         ###   ########.fr       */
+/*   Updated: 2025/09/27 12:17:37 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,15 @@ const char* Form::GradeTooHighException::what() const throw() {
 }
 
 std::ostream& operator<<(std::ostream& os, Form const& form) {
-	os << "Form: " << form.getName() << " Signed: " << form.isSigned() << " Sign grade: " << form.getGradeToSign() << " Exec grade: " << form.getGradeToExecute();
-	return (os);
+    os << "Form: " << form.getName()
+       << " | Signed: ";
+    if (form.isSigned())
+        os << "yes";
+    else
+        os << "no";
+    os << " | Sign grade: " << form.getGradeToSign()
+       << " | Exec grade: " << form.getGradeToExecute();
+    return os;
 }
 
 void		Form::beSigned(Bureaucrat const& Buro) {

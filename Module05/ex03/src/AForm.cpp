@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 10:51:44 by jdelorme          #+#    #+#             */
-/*   Updated: 2025/09/18 11:19:20 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/27 12:20:49 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,15 @@ const char* AForm::FormNoSignedException::what() const throw() {
 }
 
 std::ostream& operator<<(std::ostream& os, AForm const& form) {
-	os << "Form: " << form.getName() << " Signed: " << form.isSigned() << " Sign grade: " << form.getGradeToSign() << " Exec grade: " << form.getGradeToExecute();
-	return (os);
+    os << "Form: " << form.getName()
+       << " | Signed: ";
+    if (form.isSigned())
+        os << "yes";
+    else
+        os << "no";
+    os << " | Sign grade: " << form.getGradeToSign()
+       << " | Exec grade: " << form.getGradeToExecute();
+    return os;
 }
 
 void		AForm::beSigned(Bureaucrat const& Buro) {
