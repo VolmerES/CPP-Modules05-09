@@ -1,7 +1,7 @@
-SRC = 
+SRC = src/main.cpp
 OBJDIR = obj
 OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SRC:.cpp=.o)))
-NAME = 
+NAME = whatever
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 CXX = c++
 RM = rm -f
