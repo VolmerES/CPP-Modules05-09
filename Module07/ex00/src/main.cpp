@@ -6,11 +6,12 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 13:59:19 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/29 14:03:09 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/29 14:09:18 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <string>
 #include "../inc/whatever.hpp"
 
 int main( void ) {
