@@ -26,6 +26,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME) .gitignore
+	rm -rf $(OBJDIR)
 
 re: fclean all
 
