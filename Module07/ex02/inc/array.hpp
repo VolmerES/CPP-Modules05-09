@@ -6,14 +6,12 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:14:37 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/30 14:23:33 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:45:36 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ARRAY_HPP
 # define ARRAY_HPP
-
-#include "array.tpp"
 
 template<typename T>
 class Array {
@@ -28,7 +26,10 @@ class Array {
 		~Array();
 		
 		T&	operator[](unsigned int n);
+		const T& operator[](unsigned int n) const;
 		unsigned int	size() const;
 };
+
+#include "array.tpp"
 
 #endif

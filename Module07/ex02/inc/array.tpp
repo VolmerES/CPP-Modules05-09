@@ -6,11 +6,12 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:19:37 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/30 15:15:52 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:45:18 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "array.hpp"
+#include <stdexcept>
+#include <iostream>
 
 template<typename T>
 Array<T>::Array() : _data(NULL), _size(0) {}
@@ -52,4 +53,21 @@ Array<T>& Array<T>::operator=(const Array & other) {
 		}
 	}
 	return (*this);
+}
+
+template<typename T>
+T&	Array<T>::operator[](unsigned int n) {
+	if (_data[_size] <= i) {
+		throw std::out_of_range("Out of bounds");
+	}
+	return (_data[i]);
+}
+
+
+template<typename T>
+const T& Array<T>::operator[](nsigned int n) const {
+	if (_data[_size] <= i) {
+		throw std::out_of_range("Out of bounds");
+	}
+	return (_data[i]);
 }
