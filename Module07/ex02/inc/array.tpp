@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   array.hpp                                          :+:      :+:    :+:   */
+/*   array.tpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/29 18:14:37 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/30 14:23:33 by volmer           ###   ########.fr       */
+/*   Created: 2025/09/30 14:19:37 by volmer            #+#    #+#             */
+/*   Updated: 2025/09/30 15:03:51 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARRAY_HPP
-# define ARRAY_HPP
-
-#include "array.tpp"
+#include "array.hpp"
 
 template<typename T>
-class Array {
-	private:
-		T*				_data;
-		unsigned int	_size;
-	public:
-		Array();
-		Array(unsigned int n);
-		Array(const Array & other);
-		Array& operator=(const Array & other);
-		~Array();
-		
-		T&	operator[](unsigned int n);
-		unsigned int	size() const;
-};
+Array<T>::Array() : _data(NULL), _size(0) {}
 
-#endif
+
+template<typename T>
+unsigned int	Array<T>::size() const { return this->_size; }
+
+template<typename T>
+Array<T>::Array(unsigned int n) : _data(NULL), _size(n) {
+	if (_size > 0) {
+		_data = T[_size]();
+	}
+}
