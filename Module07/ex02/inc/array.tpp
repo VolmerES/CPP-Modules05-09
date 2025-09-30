@@ -6,24 +6,24 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:19:37 by volmer            #+#    #+#             */
-/*   Updated: 2025/09/30 15:45:18 by volmer           ###   ########.fr       */
+/*   Updated: 2025/09/30 17:49:09 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdexcept>
-#include <iostream>
+#include "array.hpp"
 
 template<typename T>
-Array<T>::Array() : _data(NULL), _size(0) {}
+Array<T>::Array() : _data(nullptr), _size(0) {}
 
 
 template<typename T>
 unsigned int	Array<T>::size() const { return this->_size; }
 
 template<typename T>
-Array<T>::Array(unsigned int n) : _data(NULL), _size(n) {
+Array<T>::Array(unsigned int n) : _data(new T[n]()), _size(n) {
 	if (_size > 0) {
-		_data = T[_size]();
+		_data = new T[_size]();
 	}
 }
 
@@ -33,41 +33,44 @@ Array<T>::~Array() {
 }
 
 template<typename T>
-Array<T>::Array(const Array & other) : _data(NULL), _size(other.size) {
+Array<T>::Array(const Array<T>& other) : _data(nullptr), _size(other._size) {
 	if (_size > 0) {
 		_data = new T[_size]();
-		for (size_t i = 0; i < _size; i++){
+		for (unsigned int i = 0; i < _size; i++){
 			_data[i] = other._data[i];
 		}
 	}
 }
 
 template<typename T>
-Array<T>& Array<T>::operator=(const Array & other) {
-	if (this != &other){
-		delete[] _data;
-		_size = other._size;
-		_data = new T[_size];
-		for (size_t i = 0; i < _size; i++){
-			_data[i] = other._data[i];
-		}
-	}
-	return (*this);
+Array<T>& Array<T>::operator=(const Array<T>& other) {
+    if (this != &other) {
+        delete[] _data;
+        _size = other._size;
+        if (_size > 0) {
+            _data = new T[_size];
+            for (unsigned int i = 0; i < _size; i++) {
+                _data[i] = other._data[i];
+            }
+        } else {
+            _data = NULL;
+        }
+    }
+    return *this;
 }
 
 template<typename T>
 T&	Array<T>::operator[](unsigned int n) {
-	if (_data[_size] <= i) {
+	if (_size <= n) {
 		throw std::out_of_range("Out of bounds");
 	}
-	return (_data[i]);
+	return (_data[n]);
 }
 
-
 template<typename T>
-const T& Array<T>::operator[](nsigned int n) const {
-	if (_data[_size] <= i) {
+const T& Array<T>::operator[](unsigned int n) const {
+	if (_size <= n) {
 		throw std::out_of_range("Out of bounds");
 	}
-	return (_data[i]);
+	return (_data[n]);
 }
