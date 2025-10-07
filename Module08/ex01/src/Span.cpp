@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:04:23 by volmer            #+#    #+#             */
-/*   Updated: 2025/10/07 18:43:22 by volmer           ###   ########.fr       */
+/*   Updated: 2025/10/07 18:59:14 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,11 @@ unsigned long	Span::shortestSpan() const
 
 unsigned long	Span::longestSpan() const
 {
+	if (_data.size() <= 2)
+		throw std::runtime_error("Not enough numbers");
 	
+	long minVal = *std::min_element(_data.begin(), _data.end());
+	long maxVal = *std::max_element(_data.begin(), _data.end());
+
+	return (static_cast<unsigned int>(maxVal - minVal));
 }
