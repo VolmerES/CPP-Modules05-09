@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:37:30 by volmer            #+#    #+#             */
-/*   Updated: 2025/10/07 16:50:12 by volmer           ###   ########.fr       */
+/*   Updated: 2025/10/07 16:52:37 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	main()
 	v.push_back(3);
 	v.push_back(4);
 	v.push_back(5);
+
+	std::cout << "Vector content: ";
+    for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+        std::cout << *it << " ";
+    std::cout << std::endl;
 
 	int value;
     std::cout << "Type value to search: ";
