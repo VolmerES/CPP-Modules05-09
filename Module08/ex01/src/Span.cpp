@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:04:23 by volmer            #+#    #+#             */
-/*   Updated: 2025/10/07 18:59:14 by volmer           ###   ########.fr       */
+/*   Updated: 2025/10/07 19:06:37 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	Span::addNumber(int nb)
 		throw std::runtime_error("Cannot add more numbers, Span in full");
 	_data.push_back(nb);
 }
-template<typename T>
-void			Span::addRange(T first, T last)
-{
-	
-}
-
+//emplate<typename T>
+//oid			Span::addRange(T first, T last)
+//
+//	
+//
+//
 unsigned long	Span::shortestSpan() const
 {
 	if (_data.size() <= 2)
@@ -61,6 +61,7 @@ unsigned long	Span::shortestSpan() const
 		if (di < best)
 			best = di;
 	}
+	return (static_cast<unsigned int>(best));
 }
 
 unsigned long	Span::longestSpan() const

@@ -1,7 +1,8 @@
-SRC = src/main.cpp
+SRC = src/main.cpp \
+	  src/Span.cpp
 OBJDIR = obj
 OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SRC:.cpp=.o)))
-NAME = easyfind
+NAME = Span
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 CXX = c++
 RM = rm -f
