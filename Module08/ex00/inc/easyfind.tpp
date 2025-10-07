@@ -6,11 +6,13 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:51:12 by volmer            #+#    #+#             */
-/*   Updated: 2025/10/07 16:38:29 by volmer           ###   ########.fr       */
+/*   Updated: 2025/10/07 16:43:38 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
+#include <algorithm>
+#include <stdexcept>
 
 template <typename T>
 typename T::iterator	easyfind(T& container, int nb)
