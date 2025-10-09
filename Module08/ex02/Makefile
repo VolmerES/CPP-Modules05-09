@@ -1,5 +1,4 @@
-SRC = src/main.cpp \
-	  src/MutantStack.cpp
+SRC = src/main.cpp
 OBJDIR = obj
 OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SRC:.cpp=.o)))
 NAME = MutantStack
