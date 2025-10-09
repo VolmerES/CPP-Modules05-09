@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"stack": "cpp",
+		"iterator": "cpp",
+		"queue": "cpp",
+		"string": "cpp",
+		"unordered_map": "cpp",
+		"vector": "cpp",
+		"deque": "cpp"
+	}
+}
