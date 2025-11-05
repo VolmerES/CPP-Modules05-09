@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:11:15 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/05 16:05:29 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 16:24:59 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void BitcoinExchange::handleInput(const std::string & inputpath) const
 		{
 			double	rate = getRateForDate(date);
 			double	result = value * rate;
-			std::cout << date << "->" << value << "=" << result << std::endl;
+			std::cout << date << " -> " << value << " = " << result << std::endl;
 		}
 		catch (const std::exception & e)
 		{
@@ -174,7 +174,7 @@ static std::string ft_trim(const std::string &s)
 	return s.substr(start, end - start + 1);
 }
 
-bool BitcoinExchange::processInputFile(const std::string & line, std::string & date, double& value) 
+bool BitcoinExchange::processInputFile(const std::string & line, std::string & date, double& value) const
 {
 	if (line.empty())
 		return (false);
@@ -187,11 +187,12 @@ bool BitcoinExchange::processInputFile(const std::string & line, std::string & d
 	}
 	std::string left;
 	std::string right;
+
 	
 	left = line.substr(0, bar);
 	right = line.substr(bar + 1);
-	ft_trim(left);
-	ft_trim(right);
+	left = ft_trim(left);
+	right = ft_trim(right);
 	if (left == "date" && right == "value")
 		return (false);
 	if (!isValidDate(left))

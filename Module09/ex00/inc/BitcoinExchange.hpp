@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 13:37:50 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/03 18:09:56 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 16:23:23 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ class BitcoinExchange {
 		
 		double		getRateForDate(const std::string & date) const;
 		static bool	isValidDate(const std::string & date);
-		static bool	processInputFile(const std::string & line,
-                               std::string & date, double& value);
+		bool	processInputFile(const std::string & line,
+                               std::string & date, double& value) const;
 	public:
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange & other);
