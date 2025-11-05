@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:11:15 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/05 13:36:00 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 13:38:55 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ static std::string ft_trim(const std::string &s)
 
 bool BitcoinExchange::processInputFile(const std::string & line, std::string & date, double& value) 
 {
-    // 1) Si la línea está vacía, no hay nada que procesar → return false (silencioso).
 	if (line.empty())
 		return (false);
 		
@@ -154,22 +153,20 @@ bool BitcoinExchange::processInputFile(const std::string & line, std::string & d
   		std::cerr << "Error: bad input => " << line << std::endl;
   		return false;
 	}
-    // 3) Separar en left (antes de '|') y right (después de '|').
 	std::string left;
 	std::string right;
 	
 	left = line.substr(0, bar);
 	right = line.substr(bar + 1);
-	
-    // 4) trim() a ambos lados para eliminar espacios.
 	ft_trim(left);
 	ft_trim(right);
-
-	
-    // 5) Si es la cabecera "date | value", ignorar (return false sin error).
-    // 6) Validar formato de fecha con isValidDate(left). Si falla → "Error: bad input => <line>".
-	if (!isValidDate(left))
+	if (left == "date" && right == "value")
 		return (false);
+	if (!isValidDate(left))
+	{
+		std::cerr << "Error: no valid date => " << line << std::endl;
+		return (false);
+	}
     // 7) Parsear el valor (double) desde right con stringstream.
     //    - Si falla la conversión → "Error: bad input => <line>".
     //    - Comprobar que no haya basura extra tras el número (saltando espacios).
