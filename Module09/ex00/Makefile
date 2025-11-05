@@ -1,4 +1,5 @@
-SRC = src/main.cpp
+SRC = src/main.cpp \
+	  src/BitcoinExchange.cpp
 OBJDIR = obj
 OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SRC:.cpp=.o)))
 NAME = btc
