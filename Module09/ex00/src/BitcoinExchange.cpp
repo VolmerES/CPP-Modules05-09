@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:11:15 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/05 12:16:32 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 13:36:00 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,49 @@ double BitcoinExchange::getRateForDate(const std::string & date) const
 void BitcoinExchange::handleInput(const std::string & inputpath) const {}
 
 
+static std::string ft_trim(const std::string &s)
+{
+	size_t start = s.find_first_not_of(" \t\r\n");
+	if (start == std::string::npos)
+		return ("");
+	size_t end = s.find_last_not_of(" \t\r\n");
+	return s.substr(start, end - start + 1);
+}
 
-bool BitcoinExchange::processInputFile(const std::string & line,
-                                       std::string & date, double& value) {}
+bool BitcoinExchange::processInputFile(const std::string & line, std::string & date, double& value) 
+{
+    // 1) Si la línea está vacía, no hay nada que procesar → return false (silencioso).
+	if (line.empty())
+		return (false);
+		
+	size_t bar = line.find('|');
+	if (bar == std::string::npos)
+	{
+  		std::cerr << "Error: bad input => " << line << std::endl;
+  		return false;
+	}
+    // 3) Separar en left (antes de '|') y right (después de '|').
+	std::string left;
+	std::string right;
+	
+	left = line.substr(0, bar);
+	right = line.substr(bar + 1);
+	
+    // 4) trim() a ambos lados para eliminar espacios.
+	ft_trim(left);
+	ft_trim(right);
+
+	
+    // 5) Si es la cabecera "date | value", ignorar (return false sin error).
+    // 6) Validar formato de fecha con isValidDate(left). Si falla → "Error: bad input => <line>".
+	if (!isValidDate(left))
+		return (false);
+    // 7) Parsear el valor (double) desde right con stringstream.
+    //    - Si falla la conversión → "Error: bad input => <line>".
+    //    - Comprobar que no haya basura extra tras el número (saltando espacios).
+    // 8) Comprobar reglas del enunciado:
+    //    - value < 0 → "Error: not a positive number."
+    //    - value > 1000 → "Error: too large a number."
+    // 9) Si todo OK:
+    //    - date = left; value = número leído; return true.										
+}
