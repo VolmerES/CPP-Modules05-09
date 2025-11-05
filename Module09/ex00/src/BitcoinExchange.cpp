@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:11:15 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/05 11:38:25 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 12:16:32 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,16 @@
 
 BitcoinExchange::BitcoinExchange() {}
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange & other) {}
+BitcoinExchange::BitcoinExchange(const BitcoinExchange & other) : _rates(other._rates) {}
 
-BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange & other) {}
+BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange & other)
+{
+	if (this != &other)
+	{
+		_rates = other._rates;
+	}
+	return (*this);
+}
 
 BitcoinExchange::~BitcoinExchange() {}
 
@@ -74,10 +81,6 @@ void BitcoinExchange::loadDatabase(const std::string & datapath)
 	datacsv.close();
 }
 
-void BitcoinExchange::handleInput(const std::string & inputpath) const {}
-
-double BitcoinExchange::getRateForDate(const std::string & date) const {}
-
 bool BitcoinExchange::isValidDate(const std::string & date)
 {
 	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
@@ -114,6 +117,22 @@ bool BitcoinExchange::isValidDate(const std::string & date)
 
 	return (true);
 }
+double BitcoinExchange::getRateForDate(const std::string & date) const
+{
+	std::map<std::string, double>::const_iterator it = _rates.find(date);
+	if (it != _rates.end())
+		return (it->second);
+
+	it = _rates.lower_bound(date);
+	if (it == _rates.begin())
+		throw std::runtime_error("Error: no rate avaliable before" + date);
+	it--;
+	return (it->second);
+}
+
+void BitcoinExchange::handleInput(const std::string & inputpath) const {}
+
+
 
 bool BitcoinExchange::processInputFile(const std::string & line,
                                        std::string & date, double& value) {}
