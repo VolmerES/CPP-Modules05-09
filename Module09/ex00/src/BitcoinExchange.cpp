@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:11:15 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/03 18:45:09 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 11:38:25 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,42 @@ void BitcoinExchange::handleInput(const std::string & inputpath) const {}
 
 double BitcoinExchange::getRateForDate(const std::string & date) const {}
 
-bool BitcoinExchange::isValidDate(const std::string & date) {}
+bool BitcoinExchange::isValidDate(const std::string & date)
+{
+	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
+		return (false);
+
+	std::string	yearSTR;
+	std::string	monthSTR;
+	std::string	daySTR;
+
+
+	yearSTR = date.substr(0, 4);
+	monthSTR = date.substr(5, 2);
+	daySTR = date.substr(8, 2);
+
+	std::stringstream ssYear(yearSTR);
+	std::stringstream ssMonth(monthSTR);
+	std::stringstream ssDay(daySTR);
+
+	int year, month, day;
+	
+ 	if (!(ssYear >> year) || !(ssMonth >> month) || !(ssDay >> day))
+    	return (false);
+	
+	if (month < 1 || month > 12 || day < 1)
+		return (false);
+	
+	int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+	if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+   		daysInMonth[1] = 29;
+	
+	if (day > daysInMonth[month - 1])
+		return (false);
+
+	return (true);
+}
 
 bool BitcoinExchange::processInputFile(const std::string & line,
                                        std::string & date, double& value) {}
