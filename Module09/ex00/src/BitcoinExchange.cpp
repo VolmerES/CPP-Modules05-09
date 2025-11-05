@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:11:15 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/05 13:45:38 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 16:05:29 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,39 @@ double BitcoinExchange::getRateForDate(const std::string & date) const
 	return (it->second);
 }
 
-void BitcoinExchange::handleInput(const std::string & inputpath) const {}
+void BitcoinExchange::handleInput(const std::string & inputpath) const
+{
+	std::ifstream inputFile(inputpath.c_str());
+
+	if (!inputFile)
+	{
+		std::cerr << "Error: could not open file." << std::endl;
+        return;
+	}
+
+	std::string line;
+	std::string date;
+	double		value;
+
+	while (std::getline(inputFile, line))
+	{
+		if (!processInputFile(line, date, value))
+		{
+			continue;
+		}
+		try
+		{
+			double	rate = getRateForDate(date);
+			double	result = value * rate;
+			std::cout << date << "->" << value << "=" << result << std::endl;
+		}
+		catch (const std::exception & e)
+		{
+				std::cerr << e.what() << std::endl;
+		}
+	}
+	inputFile.close();
+}
 
 
 static std::string ft_trim(const std::string &s)
