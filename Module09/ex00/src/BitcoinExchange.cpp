@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:11:15 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/05 13:38:55 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/05 13:45:38 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,12 +167,33 @@ bool BitcoinExchange::processInputFile(const std::string & line, std::string & d
 		std::cerr << "Error: no valid date => " << line << std::endl;
 		return (false);
 	}
-    // 7) Parsear el valor (double) desde right con stringstream.
-    //    - Si falla la conversión → "Error: bad input => <line>".
-    //    - Comprobar que no haya basura extra tras el número (saltando espacios).
-    // 8) Comprobar reglas del enunciado:
-    //    - value < 0 → "Error: not a positive number."
-    //    - value > 1000 → "Error: too large a number."
-    // 9) Si todo OK:
-    //    - date = left; value = número leído; return true.										
+
+	std::stringstream ss(right);
+	double val;
+	if (!(ss >> val))
+	{
+		std::cerr << "Error: bad input => " << line << std::endl;
+        return (false);
+	}
+	std::string trash;
+	ss >> trash;
+	if (!trash.empty())
+	{
+		std::cerr << "Error: bad input => " << line << std::endl;
+        return false;
+	}
+	    if (val < 0)
+    {
+        std::cerr << "Error: not a positive number." << std::endl;
+        return false;
+    }
+    
+    if (val > 1000)
+    {
+        std::cerr << "Error: too large a number." << std::endl;
+        return false;
+    }
+	date = left;
+	value = val;
+    return (true);								
 }
