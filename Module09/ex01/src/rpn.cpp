@@ -6,11 +6,33 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 12:35:12 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/06 13:14:48 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/06 13:20:15 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/rpn.hpp"
+
+RPN::RPN(){}
+
+RPN::RPN(const RPN &other)
+{
+	*this = other;
+}
+RPN& RPN::operator=(const RPN &other)
+{
+	if (this != &other)
+	{
+		while (!stack.empty())
+			stack.pop();
+		while (!other.stack.empty())
+		{
+			stack.push(other.stack.top());
+			other.stack.pop();
+		}
+	}
+	return (*this);
+}
+RPN::~RPN(){}
 
 int	RPN::evaluate(const std::string expr)
 {	
