@@ -6,29 +6,19 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 12:35:12 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/10 15:55:12 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/10 16:28:26 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/rpn.hpp"
 
 RPN::RPN(){}
-
-RPN::RPN(const RPN &other)
-{
-	*this = other;
-}
+RPN::RPN(const RPN &other) : stack(other.stack) {}
 RPN& RPN::operator=(const RPN &other)
 {
 	if (this != &other)
 	{
-		while (!stack.empty())
-			stack.pop();
-		while (!other.stack.empty())
-		{
-			stack.push(other.stack.top());
-			other.stack.pop();
-		}
+		stack = other.stack;
 	}
 	return (*this);
 }
@@ -59,6 +49,8 @@ bool	RPN::isOperator(char c)
 
 int	RPN::evaluate(const std::string expr)
 {	
+	if (expr.empty())
+		throw std::runtime_error("Invalid expression");
 	while (!stack.empty())
 		stack.pop();
 	for (size_t i = 0; i < expr.length(); i++)
@@ -80,10 +72,7 @@ int	RPN::evaluate(const std::string expr)
 		else
 			throw std::runtime_error("Invalid token");
 	}
-	if (stack.size() > 1)
+	if (stack.size() != 1)
 		throw std::runtime_error("Invalid expression");
-	else if (stack.empty())
-		throw std::runtime_error("Invalid expression");
-	std::cout << stack.top() << std::endl;
-	
+	return (stack.top());
 }
