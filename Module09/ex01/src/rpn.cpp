@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 12:35:12 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/06 13:20:15 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/10 15:55:12 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,29 @@ RPN& RPN::operator=(const RPN &other)
 	return (*this);
 }
 RPN::~RPN(){}
+
+int RPN::applyOperator(char op, int a, int b)
+{
+	if (op == '+')
+		return (a + b);
+	else if (op == '-')
+		return (a - b);
+	else if (op == '*')
+		return (a * b);
+	else if (op == '/')
+	{
+		if (b == 0)
+			throw std::runtime_error("Division by zero");
+		return (a / b);
+	}
+	else
+		throw std::runtime_error("Invalid operator");
+}
+
+bool	RPN::isOperator(char c)
+{
+	return (c == '+' || c == '-' || c == '*' || c == '/');
+}
 
 int	RPN::evaluate(const std::string expr)
 {	
