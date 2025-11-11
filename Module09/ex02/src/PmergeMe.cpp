@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:52:28 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/11 14:18:01 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/11 14:36:16 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ bool	PmergeMe::isValidNumber(const std::string & str) const
 	}
 	long value;
 
-	value = std::stol(str);
-	if (value <= 0 || value > INT_MAX)
-		return (false);
+	//value = std::stol(str);
+	//if (value <= 0 || value > INT_MAX)
+	//	return (false);
 	return (true);
 }
 
@@ -101,6 +101,7 @@ void	PmergeMe::pairVector(const std::vector<int> & src,
 		{
 			A.push_back(second);
 			B.push_back(first);
+		}
 	}
 		if (size % 2 != 0)
 		{
@@ -109,5 +110,47 @@ void	PmergeMe::pairVector(const std::vector<int> & src,
 		}
 }
 
-void	PmergeMe::printAfter() const
-{}
+void	PmergeMe::sortMaxVector(std::vector<int> & A)
+{
+	if (A.size() <= 1)
+		return;
+	const size_t half = A.size() / 2;
+
+	std::vector<int> left(A.begin(), A.begin() + half);
+	std::vector<int> right(A.begin() + half, A.end());
+	
+	sortMaxVector(left);
+	sortMaxVector(right);
+
+	A.clear();
+	A.reserve(left.size() + right.size());
+
+	size_t leftIndex = 0;
+	size_t rightIndex = 0;
+
+	while (leftIndex < left.size() && rightIndex < right.size())
+	{
+		if (left[leftIndex] > right[rightIndex])
+		{
+			A.push_back(left[leftIndex]);
+			++leftIndex;
+		}
+		else
+		{
+			A.push_back(right[rightIndex]);
+			++rightIndex;
+		}
+
+	}
+	while (leftIndex < left.size())
+	{
+		A.push_back(left[leftIndex]);
+		++leftIndex;
+	}
+	while (rightIndex < right.size())
+	{
+		A.push_back(right[rightIndex]);
+		++rightIndex;
+	}
+}
+void	PmergeMe::printAfter() const {}
