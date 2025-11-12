@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jdelorme <jdelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:04:23 by volmer            #+#    #+#             */
-/*   Updated: 2025/10/08 13:18:32 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/12 12:18:59 by jdelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Span.hpp"
 #include <stdexcept>
 #include <vector>
+#include <iostream>
+#include <algorithm>
+#include <limits>
 
 Span::Span(unsigned int max) : _max(max) {
 	_data.reserve(max);
