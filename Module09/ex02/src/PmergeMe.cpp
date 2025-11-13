@@ -6,12 +6,13 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:52:28 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/13 13:09:42 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/13 13:42:02 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/PmergeMe.hpp"
 #include <vector>
+#include <climits>
 
 PmergeMe::PmergeMe() {}
 PmergeMe::PmergeMe(const PmergeMe& other) : _deq(other._deq), _vec(other._vec)  {}
@@ -151,6 +152,55 @@ void	PmergeMe::sortMaxVector(std::vector<int> & A)
 		A.push_back(right[rightIndex]);
 		++rightIndex;
 	}
+}
+
+size_t PmergeMe::findInsertPos(const std::vector<int> &v, int value) const
+{
+    size_t left = 0;
+    size_t right = v.size();
+
+    while (left < right)
+    {
+        size_t mid = (left + right) / 2;
+        if (v[mid] > value)
+            left = mid + 1;
+        else
+            right = mid;
+    }
+    return left;
+}
+
+void	PmergeMe::sortVector(std::vector<int> & A, std::vector<int> & B, bool hasOdd, int oddVal)
+{
+	sortMaxVector(B);
+	
+	std::vector<int> mainChain = B;
+
+	for (size_t i = 0; i < A.size(); ++i)
+    {
+        size_t pos = findInsertPos(mainChain, A[i]);
+        mainChain.insert(mainChain.begin() + pos, A[i]);
+    }
+    if (hasOdd)
+    {
+        size_t pos = findInsertPos(mainChain, oddVal);
+        mainChain.insert(mainChain.begin() + pos, oddVal);
+    }
+	_vec = mainChain;
+}
+
+void	PmergeMe::sortAll()
+{
+    if (_vec.size() <= 1)
+        return;
+
+    std::vector<int> A;
+    std::vector<int> B;
+    bool hasOdd = false;
+    int oddVal = 0;
+
+    pairVector(_vec, A, B, hasOdd, oddVal);
+    sortVector(A, B, hasOdd, oddVal);
 }
 
 void	PmergeMe::printAfter() const

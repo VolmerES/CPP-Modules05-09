@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:52:36 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/13 13:04:10 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/13 13:40:33 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int main(int argc, char **argv)
         sorter.printBefore();
 
         long startV = getMicroTime();
-        sorter.sortAll();    // vector
+        sorter.sortAll();
         long endV = getMicroTime();
 
         sorter.printAfter();
 
         long startD = getMicroTime();
-        sorter.sortAllDeque();   // deque
+        sorter.sortAllDeque();
         long endD = getMicroTime();
 
         std::cout << "Time to process a range of " 
