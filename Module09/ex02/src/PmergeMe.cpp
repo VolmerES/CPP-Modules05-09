@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:52:28 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/13 13:44:52 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/13 14:57:17 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,46 +110,53 @@ void	PmergeMe::pairVector(const std::vector<int> & src,
 		}
 }
 
-void	PmergeMe::sortMaxVector(std::vector<int> & A)
+void	PmergeMe::sortMaxVector(std::vector<int> & A, std::vector<int> & B)
 {
 	if (A.size() <= 1)
 		return;
 	const size_t half = A.size() / 2;
 
-	std::vector<int> left(A.begin(), A.begin() + half);
-	std::vector<int> right(A.begin() + half, A.end());
+	std::vector<int> leftA(A.begin(), A.begin() + half);
+	std::vector<int> rightA(A.begin() + half, A.end());
+	std::vector<int> leftB(B.begin(), B.begin() + half);
+	std::vector<int> rightB(B.begin() + half, B.end());
 	
-	sortMaxVector(left);
-	sortMaxVector(right);
+	sortMaxVector(leftA, leftB);
+	sortMaxVector(rightA, rightB);
 
 	A.clear();
-	A.reserve(left.size() + right.size());
+	B.clear();
+	A.reserve(leftA.size() + rightA.size());
+	B.reserve(leftB.size() + rightB.size());
 
 	size_t leftIndex = 0;
 	size_t rightIndex = 0;
 
-	while (leftIndex < left.size() && rightIndex < right.size())
+	while (leftIndex < leftA.size() && rightIndex < rightA.size())
 	{
-		if (left[leftIndex] < right[rightIndex])  // Cambio: < en lugar de >
+		if (leftB[leftIndex] < rightB[rightIndex])
 		{
-			A.push_back(left[leftIndex]);
+			A.push_back(leftA[leftIndex]);
+			B.push_back(leftB[leftIndex]);
 			++leftIndex;
 		}
 		else
 		{
-			A.push_back(right[rightIndex]);
+			A.push_back(rightA[rightIndex]);
+			B.push_back(rightB[rightIndex]);
 			++rightIndex;
 		}
-
 	}
-	while (leftIndex < left.size())
+	while (leftIndex < leftA.size())
 	{
-		A.push_back(left[leftIndex]);
+		A.push_back(leftA[leftIndex]);
+		B.push_back(leftB[leftIndex]);
 		++leftIndex;
 	}
-	while (rightIndex < right.size())
+	while (rightIndex < rightA.size())
 	{
-		A.push_back(right[rightIndex]);
+		A.push_back(rightA[rightIndex]);
+		B.push_back(rightB[rightIndex]);
 		++rightIndex;
 	}
 }
@@ -170,9 +177,68 @@ size_t PmergeMe::findInsertPos(const std::vector<int> &v, int value) const
     return left;
 }
 
+size_t PmergeMe::jacobsthal(size_t n) const
+{
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return 1;
+	
+	size_t prev2 = 0;  // J(0)
+	size_t prev1 = 1;  // J(1)
+	size_t current = 1;
+	
+	for (size_t i = 2; i <= n; ++i)
+	{
+		current = prev1 + 2 * prev2;
+		prev2 = prev1;
+		prev1 = current;
+	}
+	return current;
+}
+
+std::vector<size_t> PmergeMe::generateInsertionOrder(size_t size) const
+{
+	std::vector<size_t> order;
+	if (size <= 1)
+		return order;
+	
+	order.reserve(size - 1);
+	
+	size_t jacobIdx = 3;
+	size_t lastPos = 1;
+	
+	while (lastPos < size)
+	{
+		size_t jacobNum = jacobsthal(jacobIdx);
+		
+		// Si el número de Jacobsthal excede el tamaño, usar el tamaño - 1
+		if (jacobNum >= size)
+			jacobNum = size - 1;
+		
+		// Insertar desde jacobNum hacia abajo hasta lastPos
+		size_t i = jacobNum;
+		while (i >= lastPos && i < size)
+		{
+			order.push_back(i);
+			if (i == 0)
+				break;
+			--i;
+		}
+		
+		lastPos = jacobNum + 1;
+		++jacobIdx;
+		
+		if (jacobNum >= size - 1)
+			break;
+	}
+	
+	return order;
+}
+
 void	PmergeMe::sortVector(std::vector<int> & A, std::vector<int> & B, bool hasOdd, int oddVal)
 {
-	sortMaxVector(B);
+	sortMaxVector(A, B);
 	
 	std::vector<int> mainChain = B;
 
@@ -181,11 +247,18 @@ void	PmergeMe::sortVector(std::vector<int> & A, std::vector<int> & B, bool hasOd
 	{
 		mainChain.insert(mainChain.begin(), A[0]);
 		
-		// Insertar el resto de elementos de A
-		for (size_t i = 1; i < A.size(); ++i)
+		// Generar el orden de inserción usando Jacobsthal
+		std::vector<size_t> insertOrder = generateInsertionOrder(A.size());
+		
+		// Insertar el resto de elementos de A usando el orden de Jacobsthal
+		for (size_t i = 0; i < insertOrder.size(); ++i)
 		{
-			size_t pos = findInsertPos(mainChain, A[i]);
-			mainChain.insert(mainChain.begin() + pos, A[i]);
+			size_t idx = insertOrder[i];
+			if (idx < A.size())
+			{
+				size_t pos = findInsertPos(mainChain, A[idx]);
+				mainChain.insert(mainChain.begin() + pos, A[idx]);
+			}
 		}
 	}
 	
@@ -257,86 +330,51 @@ void	PmergeMe::pairDeque(const std::deque<int> &src,
 	}
 }
 
-void	PmergeMe::sortMaxDeque(std::deque<int> &A)
+void	PmergeMe::sortMaxDeque(std::deque<int> &A, std::deque<int> &B)
 {
 	if (A.size() <= 1)
 		return;
 	const size_t half = A.size() / 2;
 
-	std::deque<int> left(A.begin(), A.begin() + half);
-	std::deque<int> right(A.begin() + half, A.end());
+	std::deque<int> leftA(A.begin(), A.begin() + half);
+	std::deque<int> rightA(A.begin() + half, A.end());
+	std::deque<int> leftB(B.begin(), B.begin() + half);
+	std::deque<int> rightB(B.begin() + half, B.end());
 	
-	sortMaxDeque(left);
-	sortMaxDeque(right);
+	sortMaxDeque(leftA, leftB);
+	sortMaxDeque(rightA, rightB);
 
 	A.clear();
-
-	size_t leftIndex = 0;
-	size_t rightIndex = 0;
-
-	while (leftIndex < left.size() && rightIndex < right.size())
-	{
-		if (left[leftIndex] < right[rightIndex])  // Cambio: < en lugar de >
-		{
-			A.push_back(left[leftIndex]);
-			++leftIndex;
-		}
-		else
-		{
-			A.push_back(right[rightIndex]);
-			++rightIndex;
-		}
-	}
-	while (leftIndex < left.size())
-	{
-		A.push_back(left[leftIndex]);
-		++leftIndex;
-	}
-	while (rightIndex < right.size())
-	{
-		A.push_back(right[rightIndex]);
-		++rightIndex;
-	}
-}
-
-void	PmergeMe::sortMinDeque(std::deque<int> &B)
-{
-	if (B.size() <= 1)
-		return;
-	const size_t half = B.size() / 2;
-
-	std::deque<int> left(B.begin(), B.begin() + half);
-	std::deque<int> right(B.begin() + half, B.end());
-	
-	sortMinDeque(left);
-	sortMinDeque(right);
-
 	B.clear();
 
 	size_t leftIndex = 0;
 	size_t rightIndex = 0;
 
-	while (leftIndex < left.size() && rightIndex < right.size())
+	while (leftIndex < leftA.size() && rightIndex < rightA.size())
 	{
-		if (left[leftIndex] < right[rightIndex])
+		if (leftB[leftIndex] < rightB[rightIndex])
 		{
-			B.push_back(left[leftIndex]);
+			A.push_back(leftA[leftIndex]);
+			B.push_back(leftB[leftIndex]);
 			++leftIndex;
 		}
 		else
 		{
-			B.push_back(right[rightIndex]);
+			A.push_back(rightA[rightIndex]);
+			B.push_back(rightB[rightIndex]);
 			++rightIndex;
 		}
 	}
-	while (leftIndex < left.size())
+	while (leftIndex < leftA.size())
 	{
-		B.push_back(left[leftIndex]);
+		A.push_back(leftA[leftIndex]);
+		B.push_back(leftB[leftIndex]);
 		++leftIndex;
 	}
-	while (rightIndex < right.size())
+	while (rightIndex < rightA.size())
 	{
-		B.push_back(right[rightIndex]);
+		A.push_back(rightA[rightIndex]);
+		B.push_back(rightB[rightIndex]);
 		++rightIndex;
 	}
 }
@@ -357,9 +395,44 @@ size_t PmergeMe::findInsertPos(const std::deque<int> &v, int value) const
     return left;
 }
 
+std::deque<size_t> PmergeMe::generateInsertionOrderDeque(size_t size) const
+{
+	std::deque<size_t> order;
+	if (size <= 1)
+		return order;
+	
+	size_t jacobIdx = 3;
+	size_t lastPos = 1;
+	
+	while (lastPos < size)
+	{
+		size_t jacobNum = jacobsthal(jacobIdx);
+		
+		if (jacobNum >= size)
+			jacobNum = size - 1;
+		
+		size_t i = jacobNum;
+		while (i >= lastPos && i < size)
+		{
+			order.push_back(i);
+			if (i == 0)
+				break;
+			--i;
+		}
+		
+		lastPos = jacobNum + 1;
+		++jacobIdx;
+		
+		if (jacobNum >= size - 1)
+			break;
+	}
+	
+	return order;
+}
+
 void	PmergeMe::sortDeque(std::deque<int> &A, std::deque<int> &B, bool hasOdd, int oddVal)
 {
-	sortMaxDeque(B);
+	sortMaxDeque(A, B);
 	
 	std::deque<int> mainChain = B;
 
@@ -368,11 +441,18 @@ void	PmergeMe::sortDeque(std::deque<int> &A, std::deque<int> &B, bool hasOdd, in
 	{
 		mainChain.insert(mainChain.begin(), A[0]);
 		
-		// Insertar el resto de elementos de A
-		for (size_t i = 1; i < A.size(); ++i)
+		// Generar el orden de inserción usando Jacobsthal
+		std::deque<size_t> insertOrder = generateInsertionOrderDeque(A.size());
+		
+		// Insertar el resto de elementos de A usando el orden de Jacobsthal
+		for (size_t i = 0; i < insertOrder.size(); ++i)
 		{
-			size_t pos = findInsertPos(mainChain, A[i]);
-			mainChain.insert(mainChain.begin() + pos, A[i]);
+			size_t idx = insertOrder[i];
+			if (idx < A.size())
+			{
+				size_t pos = findInsertPos(mainChain, A[idx]);
+				mainChain.insert(mainChain.begin() + pos, A[idx]);
+			}
 		}
 	}
 	
