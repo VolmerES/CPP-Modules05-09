@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:52:28 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/13 13:04:57 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/13 13:09:42 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,13 +153,141 @@ void	PmergeMe::sortMaxVector(std::vector<int> & A)
 	}
 }
 
-size_t PmergeMe::findInsertPos(const std::vector<int> &v, int value) const
+void	PmergeMe::printAfter() const
+{
+    std::cout << "After: ";
+    for (size_t i = 0; i < _vec.size(); ++i)
+    {
+        std::cout << _vec[i];
+        if (i != _vec.size() - 1)
+            std::cout << ' ';
+    }
+    std::cout << std::endl;
+}
+
+void	PmergeMe::pairDeque(const std::deque<int> &src,
+							std::deque<int> &A,
+							std::deque<int> &B,
+							bool &hasOdd, int &oddVal)
+{
+	A.clear();
+	B.clear();
+	hasOdd = false;
+	
+	const size_t size = src.size();
+	const size_t pairs = size / 2;
+
+	for (size_t i = 0; i < pairs; ++i)
+	{
+		int first = src[i * 2];
+		int second = src[i * 2 + 1];
+		if (first < second)
+		{
+			A.push_back(first);
+			B.push_back(second);
+		}
+		else
+		{
+			A.push_back(second);
+			B.push_back(first);
+		}
+	}
+	if (size % 2 != 0)
+	{
+		oddVal = src.back();
+		hasOdd = true;
+	}
+}
+
+void	PmergeMe::sortMaxDeque(std::deque<int> &A)
+{
+	if (A.size() <= 1)
+		return;
+	const size_t half = A.size() / 2;
+
+	std::deque<int> left(A.begin(), A.begin() + half);
+	std::deque<int> right(A.begin() + half, A.end());
+	
+	sortMaxDeque(left);
+	sortMaxDeque(right);
+
+	A.clear();
+
+	size_t leftIndex = 0;
+	size_t rightIndex = 0;
+
+	while (leftIndex < left.size() && rightIndex < right.size())
+	{
+		if (left[leftIndex] > right[rightIndex])
+		{
+			A.push_back(left[leftIndex]);
+			++leftIndex;
+		}
+		else
+		{
+			A.push_back(right[rightIndex]);
+			++rightIndex;
+		}
+	}
+	while (leftIndex < left.size())
+	{
+		A.push_back(left[leftIndex]);
+		++leftIndex;
+	}
+	while (rightIndex < right.size())
+	{
+		A.push_back(right[rightIndex]);
+		++rightIndex;
+	}
+}
+
+void	PmergeMe::sortMinDeque(std::deque<int> &B)
+{
+	if (B.size() <= 1)
+		return;
+	const size_t half = B.size() / 2;
+
+	std::deque<int> left(B.begin(), B.begin() + half);
+	std::deque<int> right(B.begin() + half, B.end());
+	
+	sortMinDeque(left);
+	sortMinDeque(right);
+
+	B.clear();
+
+	size_t leftIndex = 0;
+	size_t rightIndex = 0;
+
+	while (leftIndex < left.size() && rightIndex < right.size())
+	{
+		if (left[leftIndex] < right[rightIndex])
+		{
+			B.push_back(left[leftIndex]);
+			++leftIndex;
+		}
+		else
+		{
+			B.push_back(right[rightIndex]);
+			++rightIndex;
+		}
+	}
+	while (leftIndex < left.size())
+	{
+		B.push_back(left[leftIndex]);
+		++leftIndex;
+	}
+	while (rightIndex < right.size())
+	{
+		B.push_back(right[rightIndex]);
+		++rightIndex;
+	}
+}
+
+size_t PmergeMe::findInsertPos(const std::deque<int> &v, int value) const
 {
     size_t left = 0;
     size_t right = v.size();
 
-    // IMPORTANTE: sortMaxVector ahora mismo ordena en DESCENDENTE (>).
-    // Así que aquí buscamos la posición manteniendo ese orden.
     while (left < right)
     {
         size_t mid = (left + right) / 2;
@@ -171,12 +299,11 @@ size_t PmergeMe::findInsertPos(const std::vector<int> &v, int value) const
     return left;
 }
 
-
-void	PmergeMe::sortVector(std::vector<int> & A, std::vector<int> & B, bool hasOdd, int oddVal)
+void	PmergeMe::sortDeque(std::deque<int> &A, std::deque<int> &B, bool hasOdd, int oddVal)
 {
-	sortMaxVector(B);
+	sortMaxDeque(B);
 	
-	std::vector<int> mainChain = B;
+	std::deque<int> mainChain = B;
 
 	for (size_t i = 0; i < A.size(); ++i)
     {
@@ -188,31 +315,19 @@ void	PmergeMe::sortVector(std::vector<int> & A, std::vector<int> & B, bool hasOd
         size_t pos = findInsertPos(mainChain, oddVal);
         mainChain.insert(mainChain.begin() + pos, oddVal);
     }
-	 _vec = mainChain;
+	_deq = mainChain;
 }
 
-void	PmergeMe::sortAll()
+void	PmergeMe::sortAllDeque()
 {
-    if (_vec.size() <= 1)
+    if (_deq.size() <= 1)
         return;
 
-    std::vector<int> A;
-    std::vector<int> B;
+    std::deque<int> A;
+    std::deque<int> B;
     bool hasOdd = false;
     int oddVal = 0;
 
-    pairVector(_vec, A, B, hasOdd, oddVal);
-    sortVector(A, B, hasOdd, oddVal);
-}
-
-void	PmergeMe::printAfter() const
-{
-    std::cout << "After: ";
-    for (size_t i = 0; i < _vec.size(); ++i)
-    {
-        std::cout << _vec[i];
-        if (i != _vec.size() - 1)
-            std::cout << ' ';
-    }
-    std::cout << std::endl;
+    pairDeque(_deq, A, B, hasOdd, oddVal);
+    sortDeque(A, B, hasOdd, oddVal);
 }
