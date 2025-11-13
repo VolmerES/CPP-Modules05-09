@@ -6,7 +6,7 @@
 /*   By: volmer <volmer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:52:28 by volmer            #+#    #+#             */
-/*   Updated: 2025/11/13 13:42:02 by volmer           ###   ########.fr       */
+/*   Updated: 2025/11/13 13:44:52 by volmer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	PmergeMe::sortMaxVector(std::vector<int> & A)
 
 	while (leftIndex < left.size() && rightIndex < right.size())
 	{
-		if (left[leftIndex] > right[rightIndex])
+		if (left[leftIndex] < right[rightIndex])  // Cambio: < en lugar de >
 		{
 			A.push_back(left[leftIndex]);
 			++leftIndex;
@@ -162,7 +162,7 @@ size_t PmergeMe::findInsertPos(const std::vector<int> &v, int value) const
     while (left < right)
     {
         size_t mid = (left + right) / 2;
-        if (v[mid] > value)
+        if (v[mid] < value)  // Cambio: < en lugar de >
             left = mid + 1;
         else
             right = mid;
@@ -176,16 +176,24 @@ void	PmergeMe::sortVector(std::vector<int> & A, std::vector<int> & B, bool hasOd
 	
 	std::vector<int> mainChain = B;
 
-	for (size_t i = 0; i < A.size(); ++i)
-    {
-        size_t pos = findInsertPos(mainChain, A[i]);
-        mainChain.insert(mainChain.begin() + pos, A[i]);
-    }
-    if (hasOdd)
-    {
-        size_t pos = findInsertPos(mainChain, oddVal);
-        mainChain.insert(mainChain.begin() + pos, oddVal);
-    }
+	// Insertar el primer elemento de A al principio
+	if (!A.empty())
+	{
+		mainChain.insert(mainChain.begin(), A[0]);
+		
+		// Insertar el resto de elementos de A
+		for (size_t i = 1; i < A.size(); ++i)
+		{
+			size_t pos = findInsertPos(mainChain, A[i]);
+			mainChain.insert(mainChain.begin() + pos, A[i]);
+		}
+	}
+	
+	if (hasOdd)
+	{
+		size_t pos = findInsertPos(mainChain, oddVal);
+		mainChain.insert(mainChain.begin() + pos, oddVal);
+	}
 	_vec = mainChain;
 }
 
@@ -268,7 +276,7 @@ void	PmergeMe::sortMaxDeque(std::deque<int> &A)
 
 	while (leftIndex < left.size() && rightIndex < right.size())
 	{
-		if (left[leftIndex] > right[rightIndex])
+		if (left[leftIndex] < right[rightIndex])  // Cambio: < en lugar de >
 		{
 			A.push_back(left[leftIndex]);
 			++leftIndex;
@@ -341,7 +349,7 @@ size_t PmergeMe::findInsertPos(const std::deque<int> &v, int value) const
     while (left < right)
     {
         size_t mid = (left + right) / 2;
-        if (v[mid] > value)
+        if (v[mid] < value)  // Cambio: < en lugar de >
             left = mid + 1;
         else
             right = mid;
@@ -355,16 +363,24 @@ void	PmergeMe::sortDeque(std::deque<int> &A, std::deque<int> &B, bool hasOdd, in
 	
 	std::deque<int> mainChain = B;
 
-	for (size_t i = 0; i < A.size(); ++i)
-    {
-        size_t pos = findInsertPos(mainChain, A[i]);
-        mainChain.insert(mainChain.begin() + pos, A[i]);
-    }
-    if (hasOdd)
-    {
-        size_t pos = findInsertPos(mainChain, oddVal);
-        mainChain.insert(mainChain.begin() + pos, oddVal);
-    }
+	// Insertar el primer elemento de A al principio
+	if (!A.empty())
+	{
+		mainChain.insert(mainChain.begin(), A[0]);
+		
+		// Insertar el resto de elementos de A
+		for (size_t i = 1; i < A.size(); ++i)
+		{
+			size_t pos = findInsertPos(mainChain, A[i]);
+			mainChain.insert(mainChain.begin() + pos, A[i]);
+		}
+	}
+	
+	if (hasOdd)
+	{
+		size_t pos = findInsertPos(mainChain, oddVal);
+		mainChain.insert(mainChain.begin() + pos, oddVal);
+	}
 	_deq = mainChain;
 }
 
