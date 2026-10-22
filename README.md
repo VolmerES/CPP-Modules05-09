@@ -5,7 +5,7 @@
 
 ## 🗣️ About
 
-This repository contains my solutions for the **C++ Modules 05 to 09** of the 42 Cursus. These modules cover advanced C++ concepts, moving into the Standard Template Library (STL) and templates.
+This repository contains my solutions for the **C++ Modules 05 to 09** of the 42 Cursus. These modules cover advanced C++ concepts, moving into the Standard Template Library (STL) and templates. Modules 00 to 04 are in [CPPModules00-04](https://github.com/VolmerES/CPPModules00-04).
 
 ## 📚 Modules Overview
 
